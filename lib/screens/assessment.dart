@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/feedback.dart';
 import '../core/ui.dart';
 import '../data/assessment_repository.dart';
 import '../viewmodels/session.dart';
@@ -28,12 +29,16 @@ class _ReflectionSheetState extends ConsumerState<ReflectionSheet> {
     final p = widget.prompt;
     final correct = _selected == p.correctIndex;
 
+    // viewInsets cubre el teclado; viewPadding, la barra de gestos. Sin el
+    // segundo, el botón de abajo queda pisado por los controles del sistema.
+    final media = MediaQuery.of(context);
+
     return Padding(
       padding: EdgeInsets.only(
         left: 18,
         right: 18,
         top: 18,
-        bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+        bottom: media.viewInsets.bottom + media.viewPadding.bottom + 20,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -68,7 +73,12 @@ class _ReflectionSheetState extends ConsumerState<ReflectionSheet> {
             return Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: InkWell(
-                onTap: _revealed ? null : () => setState(() => _selected = i),
+                onTap: _revealed
+                    ? null
+                    : () {
+                        Haptics.select();
+                        setState(() => _selected = i);
+                      },
                 borderRadius: BorderRadius.circular(10),
                 child: Container(
                   width: double.infinity,
@@ -118,11 +128,19 @@ class _ReflectionSheetState extends ConsumerState<ReflectionSheet> {
                   ? null
                   : () {
                       if (!_revealed) {
+                        // La vibración distingue acierto de error antes de
+                        // que el estudiante llegue a leer la explicación.
+                        if (correct) {
+                          Haptics.success();
+                        } else {
+                          Haptics.warning();
+                        }
                         ref
                             .read(sessionProvider)
                             .answerReflection(p.id, _selected!);
                         setState(() => _revealed = true);
                       } else {
+                        Haptics.tap();
                         Navigator.of(context).pop();
                       }
                     },
@@ -160,7 +178,10 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
         title: Text(widget.isPost ? 'Evaluación de cierre' : 'Diagnóstico'),
       ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 30),
+        // El AppBar cubre la barra de estado; el inset inferior evita que la
+        // barra de gestos tape el botón de corregir al final de la lista.
+        padding: EdgeInsets.fromLTRB(
+            16, 8, 16, 30 + MediaQuery.paddingOf(context).bottom),
         children: [
           Text(
             widget.isPost
@@ -205,8 +226,11 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
                       child: InkWell(
                         onTap: _submitted
                             ? null
-                            : () => s.answerDiagnostic(q.id, i,
-                                isPost: widget.isPost),
+                            : () {
+                                Haptics.select();
+                                s.answerDiagnostic(q.id, i,
+                                    isPost: widget.isPost);
+                              },
                         borderRadius: BorderRadius.circular(9),
                         child: Container(
                           width: double.infinity,
@@ -239,6 +263,7 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
             FilledButton(
               onPressed: complete
                   ? () async {
+                      Haptics.success();
                       setState(() => _submitted = true);
                       await ProgressStore.saveTestScore(scoreOf(answers),
                           isPost: widget.isPost);
@@ -341,6 +366,7 @@ class _ResultPanel extends ConsumerWidget {
             onPressed: () {
               Clipboard.setData(
                   const ClipboardData(text: AssessmentRepository.transferTask));
+              Haptics.success();
               ScaffoldMessenger.of(context)
                   .showSnackBar(const SnackBar(content: Text('Tarea copiada')));
             },

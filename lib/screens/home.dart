@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/feedback.dart';
 import '../core/ui.dart';
 import '../domain/models.dart';
 import '../viewmodels/session.dart';
@@ -114,7 +115,10 @@ class _ActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: () {
+        Haptics.tap();
+        onTap();
+      },
       borderRadius: BorderRadius.circular(12),
       child: Container(
         padding: const EdgeInsets.all(14),
@@ -165,7 +169,10 @@ class _CaseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: () {
+        Haptics.tap();
+        onTap();
+      },
       borderRadius: BorderRadius.circular(12),
       child: Container(
         padding: const EdgeInsets.all(14),

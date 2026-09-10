@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      Nombre deliberadamente específico del proyecto. Si se llamara
+      "ic_launcher_background" y una versión futura del template de Flutter
+      definiera ese mismo recurso, Gradle fallaría por recurso duplicado.
+      Es AppColors.bedrock, el mismo fondo de la aplicación.
+    -->
+    <color name="planificamina_icon_bg">#1B1D21</color>
+</resources>

@@ -11,6 +11,16 @@ void main() {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  // Android dibuja de borde a borde: las barras del sistema quedan encima de
+  // la app. Con el fondo oscuro de la paleta, los iconos tienen que ser
+  // claros o desaparecen sobre la barra de estado.
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.light,
+    statusBarBrightness: Brightness.dark,
+    systemNavigationBarColor: Colors.transparent,
+    systemNavigationBarIconBrightness: Brightness.light,
+  ));
   runApp(const ProviderScope(child: PlanificaMinaApp()));
 }
 

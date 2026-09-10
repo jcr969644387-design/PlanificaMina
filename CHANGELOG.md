@@ -2,6 +2,31 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
+## [1.0.5] — 2026-09-10
+
+### Añadido
+- Icono propio: tres bancos de un tajo abierto en sección, en el dorado de la
+  paleta sobre el fondo de la app. Sustituye al logotipo de Flutter. Incluye
+  icono adaptativo para Android 8+ y las cinco densidades. Vive en
+  `android_res/` porque `android/` se regenera en cada build; el workflow lo
+  copia sobre el andamio recién generado.
+- Retroalimentación táctil y sonora (`lib/core/feedback.dart`), sin ninguna
+  dependencia nueva: vibración vía `performHapticFeedback` — que no exige el
+  permiso VIBRATE — y el clic del sistema, que respeta el ajuste de sonidos
+  táctiles del teléfono. La intensidad codifica significado: seleccionar una
+  opción vibra más flojo que acertar una reflexión, y fallar vibra distinto.
+
+### Corregido
+- El nombre bajo el icono aparecía como «planificamina», el nombre del paquete
+  Dart. El workflow ahora fija `android:label` a «PlanificaMina».
+- Áreas seguras. La barra de gestos tapaba el final de las listas en Conceptos,
+  en el diagnóstico y en las cinco pestañas del espacio de trabajo, y pisaba el
+  botón de la hoja de reflexión. Los `ListView` suman el inset inferior a su
+  relleno y la hoja suma `viewPadding.bottom` además de `viewInsets.bottom`,
+  que solo cubría el teclado.
+- Las barras del sistema se declaran transparentes con iconos claros: en modo
+  borde a borde, sobre el fondo oscuro de la app, quedaban ilegibles.
+
 ## [1.0.4] — 2026-09-10
 
 ### Cambiado

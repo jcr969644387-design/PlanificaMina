@@ -61,6 +61,29 @@ jobs:
             rm -f test/widget_test.dart
           fi
 
+      # El andamio se regenera en cada build, así que todo lo que se
+      # personalice dentro de android/ se pierde. Estos dos ajustes se
+      # reaplican aquí, después de generarlo, leyendo de android_res/.
+      - name: Aplicar icono y nombre de la aplicación
+        run: |
+          set -e
+          res="android/app/src/main/res"
+          manifest="android/app/src/main/AndroidManifest.xml"
+          test -d "$res" || { echo "No existe $res"; exit 1; }
+          test -f "$manifest" || { echo "No existe $manifest"; exit 1; }
+
+          # Icono: pisa el logotipo de Flutter del template.
+          cp -r android_res/res/. "$res/"
+          echo "Iconos copiados:"
+          find "$res" -name 'ic_launcher*' | sort
+
+          # Nombre visible bajo el icono. Sin esto queda "planificamina",
+          # que es el nombre del paquete Dart, en minúsculas y sin espacio.
+          sed -i 's/android:label="[^"]*"/android:label="PlanificaMina"/' "$manifest"
+          grep -q 'android:label="PlanificaMina"' "$manifest" \
+            || { echo "No se pudo fijar android:label"; exit 1; }
+          echo "android:label fijado a PlanificaMina"
+
       # Un único APK universal, que funciona en cualquier teléfono Android.
       # No se compila por arquitectura a propósito: repartir cuatro archivos a
       # estudiantes obliga a cada uno a averiguar cuál le toca, y equivocarse

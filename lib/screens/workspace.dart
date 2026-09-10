@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/feedback.dart';
 import '../core/ui.dart';
 import '../data/case_repository.dart';
 import '../domain/analysis.dart';
@@ -70,15 +71,21 @@ class _WorkspaceScreenState extends ConsumerState<WorkspaceScreen> {
           IconButton(
             tooltip: 'Cerrar sesión de trabajo y evaluar',
             icon: const Icon(Icons.flag_outlined),
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (_) => const AssessmentScreen(isPost: true))),
+            onPressed: () {
+              Haptics.tap();
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => const AssessmentScreen(isPost: true)));
+            },
           ),
         ],
       ),
       body: pages[_tab],
       bottomNavigationBar: NavigationBar(
         selectedIndex: _tab,
-        onDestinationSelected: (i) => setState(() => _tab = i),
+        onDestinationSelected: (i) {
+          Haptics.section();
+          setState(() => _tab = i);
+        },
         backgroundColor: AppColors.surface,
         indicatorColor: AppColors.ore.withValues(alpha: 0.22),
         destinations: const [
@@ -119,7 +126,8 @@ class _ModelTabState extends ConsumerState<_ModelTab> {
     final int sectionIndex = _section.clamp(0, s.mineCase.model.ny - 1).toInt();
 
     return ListView(
-      padding: const EdgeInsets.fromLTRB(14, 14, 14, 28),
+      padding: EdgeInsets.fromLTRB(
+          14, 14, 14, 28 + MediaQuery.paddingOf(context).bottom),
       children: [
         Row(
           children: [
@@ -254,7 +262,8 @@ class _CutoffTab extends ConsumerWidget {
     final scenarios = CaseRepository.scenariosFor(s.mineCase);
 
     return ListView(
-      padding: const EdgeInsets.fromLTRB(14, 14, 14, 28),
+      padding: EdgeInsets.fromLTRB(
+          14, 14, 14, 28 + MediaQuery.paddingOf(context).bottom),
       children: [
         const SectionTitle('Ley de corte',
             subtitle:
@@ -412,7 +421,10 @@ class _CutoffTab extends ConsumerWidget {
         ...scenarios.map((sc) => Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: InkWell(
-                onTap: () => s.applyNamedScenario(sc),
+                onTap: () {
+                  Haptics.select();
+                  s.applyNamedScenario(sc);
+                },
                 borderRadius: BorderRadius.circular(10),
                 child: Container(
                   padding: const EdgeInsets.all(12),
@@ -516,7 +528,10 @@ class _CriterionChip extends StatelessWidget {
         : Fmt.grade(
             CutoffCalculator.nsrToGrade(value, metal), metal.gradeSuffix);
     return InkWell(
-      onTap: onTap,
+      onTap: () {
+        Haptics.select();
+        onTap();
+      },
       borderRadius: BorderRadius.circular(20),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
@@ -591,7 +606,8 @@ class _ScheduleTab extends ConsumerWidget {
     final primary = s.activeMetals.first;
 
     return ListView(
-      padding: const EdgeInsets.fromLTRB(14, 14, 14, 28),
+      padding: EdgeInsets.fromLTRB(
+          14, 14, 14, 28 + MediaQuery.paddingOf(context).bottom),
       children: [
         const SectionTitle('Secuencia de extracción',
             subtitle: 'Arrastra para reordenar. El sistema no optimiza por ti: '
@@ -812,7 +828,8 @@ class _EconomicsTabState extends ConsumerState<_EconomicsTab> {
     final primary = s.activeMetals.first;
 
     return ListView(
-      padding: const EdgeInsets.fromLTRB(14, 14, 14, 28),
+      padding: EdgeInsets.fromLTRB(
+          14, 14, 14, 28 + MediaQuery.paddingOf(context).bottom),
       children: [
         const SectionTitle('Indicadores del proyecto'),
         const SizedBox(height: 10),
@@ -862,11 +879,13 @@ class _EconomicsTabState extends ConsumerState<_EconomicsTab> {
               onPressed: _busy
                   ? null
                   : () async {
+                      Haptics.tap();
                       setState(() => _busy = true);
                       await Future<void>.delayed(
                           const Duration(milliseconds: 30));
                       final bars = s.tornado();
                       if (mounted) {
+                        Haptics.success();
                         setState(() {
                           _bars = bars;
                           _busy = false;
@@ -938,6 +957,7 @@ class _EconomicsTabState extends ConsumerState<_EconomicsTab> {
 
   void _copy(BuildContext context, String data, String message) {
     Clipboard.setData(ClipboardData(text: data));
+    Haptics.success();
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(message)));
   }
@@ -955,7 +975,8 @@ class _TutorTab extends ConsumerWidget {
     final score = s.score();
 
     return ListView(
-      padding: const EdgeInsets.fromLTRB(14, 14, 14, 28),
+      padding: EdgeInsets.fromLTRB(
+          14, 14, 14, 28 + MediaQuery.paddingOf(context).bottom),
       children: [
         Container(
           padding: const EdgeInsets.all(14),

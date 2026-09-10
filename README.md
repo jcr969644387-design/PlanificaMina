@@ -94,6 +94,7 @@ Los tres son yacimientos ficticios, generados por un algoritmo determinista: id�
 lib/
 ├── main.dart
 ├── core/ui.dart                    tema, formato, componentes
+├── core/feedback.dart              vibración y sonido, sin dependencias
 ├── domain/                         Dart puro, sin Flutter — testeable al 100 %
 │   ├── models.dart                 metales, bloques, casos, escenarios
 │   ├── cutoff.dart                 NSR, breakeven, marginal, Lane, ley-tonelaje
@@ -108,6 +109,16 @@ lib/
 ```
 
 **Dos dependencias en total:** `flutter_riverpod` y `shared_preferences`. Cada dependencia es deuda de mantenimiento; un proyecto educativo pequeño debe minimizarlas.
+
+La retroalimentación táctil y sonora sigue el mismo criterio: sale entera de
+`package:flutter/services.dart`, sin paquetes de audio ni archivos de sonido. El
+sonido es el clic del sistema, así que respeta el ajuste de sonidos táctiles del
+teléfono, y la vibración usa `performHapticFeedback`, que no exige el permiso
+`VIBRATE`.
+
+El icono de la aplicación y su nombre visible viven en `android_res/`, porque la
+carpeta `android/` se regenera en cada build y se llevaría por delante cualquier
+personalización. Los detalles, en `android_res/README.md`.
 
 ---
 
@@ -146,8 +157,8 @@ Para un enlace público y permanente, crea una etiqueta de versión: eso publica
 un release con el APK adjunto, descargable por cualquiera sin cuenta.
 
 ```bash
-git tag v1.0.4
-git push origin v1.0.4
+git tag v1.0.5
+git push origin v1.0.5
 ```
 
 ---

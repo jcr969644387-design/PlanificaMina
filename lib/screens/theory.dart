@@ -12,8 +12,12 @@ class TheoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Conceptos y límites')),
+      // El AppBar ya descuenta la barra de estado. Lo que falta es el borde
+      // inferior: sin sumar el inset del sistema, la barra de gestos tapa el
+      // final de la lista.
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 30),
+        padding: EdgeInsets.fromLTRB(
+            16, 8, 16, 30 + MediaQuery.paddingOf(context).bottom),
         children: const [
           _Concept(
             title: 'Ley de corte breakeven',
