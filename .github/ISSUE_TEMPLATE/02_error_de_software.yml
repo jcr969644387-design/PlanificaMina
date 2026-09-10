@@ -1,0 +1,36 @@
+name: Error de software
+description: La app se cierra, se congela o se comporta de forma inesperada.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: Qué ocurre
+    validations:
+      required: true
+  - type: textarea
+    id: pasos
+    attributes:
+      label: Pasos para reproducirlo
+      placeholder: |
+        1. Abrir el caso Pórfido Alto Chico
+        2. Ir a la pestaña Programa
+        3. Reordenar la Fase 4 a la primera posición
+    validations:
+      required: true
+  - type: input
+    id: dispositivo
+    attributes:
+      label: Dispositivo y versión de Android/iOS
+    validations:
+      required: true
+  - type: input
+    id: flutter
+    attributes:
+      label: Salida de flutter --version
+  - type: textarea
+    id: logs
+    attributes:
+      label: Mensaje de error o traza
+      render: shell

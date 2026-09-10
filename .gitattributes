@@ -1,0 +1,16 @@
+* text=auto eol=lf
+
+*.dart   text
+*.yaml   text
+*.yml    text
+*.md     text
+
+*.png    binary
+*.jpg    binary
+*.apk    binary
+*.jar    binary
+*.keystore binary
+
+# Los workflows y el código Dart cuentan para las estadísticas del repo;
+# la documentación no debe dominar el lenguaje detectado.
+*.md linguist-documentation

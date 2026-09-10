@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: "pub"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "deps"
+    # El proyecto tiene dos dependencias a propósito. Si Dependabot propone
+    # añadir algo, la respuesta por defecto es no.
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "ci"

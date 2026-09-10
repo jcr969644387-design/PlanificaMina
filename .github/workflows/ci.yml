@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  analyze-and-test:
+    name: Análisis y pruebas
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Instalar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Mostrar versión
+        run: flutter --version
+
+      - name: Descargar dependencias
+        run: flutter pub get
+
+      - name: Verificar formato
+        # Informativo: no bloquea el build si el formato difiere.
+        run: dart format --output=none --set-exit-if-changed lib test
+        continue-on-error: true
+
+      - name: Análisis estático
+        run: flutter analyze --no-fatal-infos
+
+      # El motor de cálculo es el corazón del proyecto. Estas pruebas
+      # incluyen la regresión pedagógica: si alguien recalibra un caso y lo
+      # deja degenerado (todos los bloques por encima de la ley de corte),
+      # el build falla aquí y no llega a los estudiantes.
+      - name: Pruebas del dominio
+        run: flutter test --reporter expanded

@@ -1,0 +1,38 @@
+name: Propuesta de funcionalidad
+description: Una idea para mejorar la app.
+title: "[Propuesta] "
+labels: ["propuesta"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Criterio del proyecto: una funcionalidad entra si mejora el aprendizaje,
+        no si es técnicamente atractiva. Responder la primera pregunta es
+        obligatorio; sin ella la propuesta se cierra sin evaluar.
+  - type: textarea
+    id: aprendizaje
+    attributes:
+      label: ¿Qué problema de aprendizaje resuelve?
+      description: Qué concepto entiende mejor el estudiante gracias a esto.
+    validations:
+      required: true
+  - type: textarea
+    id: propuesta
+    attributes:
+      label: Descripción de la funcionalidad
+    validations:
+      required: true
+  - type: textarea
+    id: alternativa
+    attributes:
+      label: ¿Se puede resolver sin construirla?
+      description: Por ejemplo con una explicación, un caso nuevo o una pregunta de reflexión.
+  - type: dropdown
+    id: version
+    attributes:
+      label: ¿En qué versión debería entrar?
+      options:
+        - MVP actual
+        - V2
+        - V3
+        - No estoy seguro

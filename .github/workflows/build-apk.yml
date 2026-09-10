@@ -1,0 +1,72 @@
+name: Build APK
+
+# Se dispara al crear una etiqueta de versión (v1.0.0, v1.1.0…) o a mano
+# desde la pestaña Actions.
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-apk:
+    name: Compilar APK de release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Instalar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Instalar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Descargar dependencias
+        run: flutter pub get
+
+      # El repositorio no versiona las carpetas android/ e ios/ porque son
+      # andamios generados. Si no existen, se crean aquí sin tocar lib/.
+      - name: Generar andamio de Android si hace falta
+        run: |
+          if [ ! -d "android" ]; then
+            echo "Carpeta android/ ausente: generándola."
+            flutter create --platforms=android --project-name planificamina .
+          fi
+
+      - name: Pruebas antes de compilar
+        run: flutter test
+
+      - name: Compilar APK
+        run: flutter build apk --release
+
+      - name: Compilar APK por arquitectura
+        run: flutter build apk --split-per-abi
+
+      - name: Publicar como artefacto de la ejecución
+        uses: actions/upload-artifact@v4
+        with:
+          name: planificamina-apk
+          path: build/app/outputs/flutter-apk/*.apk
+          retention-days: 30
+
+      - name: Adjuntar al release de la etiqueta
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/app/outputs/flutter-apk/*.apk
+          body: |
+            APK de PlanificaMina generado automáticamente desde ${{ github.ref_name }}.
+
+            Aplicación educativa. Modelo simplificado: no sustituye software
+            profesional de planeamiento ni un estudio de factibilidad.

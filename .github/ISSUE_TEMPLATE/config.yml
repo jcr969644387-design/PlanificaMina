@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Documentación del proyecto
+    url: https://github.com/USUARIO/REPOSITORIO/tree/main/docs
+    about: Etapas de diseño, arquitectura, decisiones sobre IA y correcciones aplicadas.

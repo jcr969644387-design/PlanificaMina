@@ -1,0 +1,49 @@
+name: Error de contenido técnico o educativo
+description: Una fórmula, un dato o una explicación de la app son incorrectos.
+title: "[Contenido] "
+labels: ["contenido", "prioridad-alta"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Los errores de contenido son la categoría más grave de este proyecto:
+        llegan al estudiante con autoridad de sistema y no los cuestiona.
+        Se tratan con prioridad sobre cualquier error de interfaz.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área afectada
+      options:
+        - Ley de corte (breakeven / marginal / Lane)
+        - NSR y economía de concentrados
+        - Programación de producción y precedencias
+        - Evaluación económica (VAN, TIR, payback, AISC)
+        - Modelo de bloques o geología del caso
+        - Texto explicativo o pregunta de evaluación
+    validations:
+      required: true
+  - type: input
+    id: ubicacion
+    attributes:
+      label: Dónde aparece
+      placeholder: "Pestaña Ley de corte, caso Veta San Rafael"
+    validations:
+      required: true
+  - type: textarea
+    id: incorrecto
+    attributes:
+      label: Qué muestra la app
+    validations:
+      required: true
+  - type: textarea
+    id: correcto
+    attributes:
+      label: Qué debería mostrar, y por qué
+      description: Incluye la fórmula o el razonamiento. Si tienes una referencia bibliográfica, mejor.
+    validations:
+      required: true
+  - type: input
+    id: referencia
+    attributes:
+      label: Referencia (opcional)
+      placeholder: "Hustrulid & Kuchta, Open Pit Mine Planning and Design, cap. X"
