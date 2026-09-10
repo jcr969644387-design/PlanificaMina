@@ -61,24 +61,26 @@ jobs:
             rm -f test/widget_test.dart
           fi
 
+      # Un único APK universal, que funciona en cualquier teléfono Android.
+      # No se compila por arquitectura a propósito: repartir cuatro archivos a
+      # estudiantes obliga a cada uno a averiguar cuál le toca, y equivocarse
+      # da un error de instalación difícil de interpretar. Pesa más, pero se
+      # instala sin preguntas.
       - name: Compilar APK
         run: flutter build apk --release
-
-      - name: Compilar APK por arquitectura
-        run: flutter build apk --split-per-abi
 
       - name: Publicar como artefacto de la ejecución
         uses: actions/upload-artifact@v4
         with:
           name: planificamina-apk
-          path: build/app/outputs/flutter-apk/*.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
           retention-days: 30
 
       - name: Adjuntar al release de la etiqueta
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: build/app/outputs/flutter-apk/*.apk
+          files: build/app/outputs/flutter-apk/app-release.apk
           body: |
             APK de PlanificaMina generado automáticamente desde ${{ github.ref_name }}.
 

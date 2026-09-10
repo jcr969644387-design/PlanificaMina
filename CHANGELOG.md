@@ -2,6 +2,16 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
+## [1.0.4] — 2026-09-10
+
+### Cambiado
+- «Build APK» publica un único archivo, `app-release.apk`, en vez de cuatro.
+  Se elimina el paso `--split-per-abi`: los APK por arquitectura pesan menos,
+  pero obligan a cada estudiante a averiguar cuál le corresponde, y elegir mal
+  da un error de instalación difícil de interpretar. El universal se instala
+  en cualquier teléfono Android sin preguntas.
+- El release de una etiqueta adjunta también ese único APK.
+
 ## [1.0.3] — 2026-09-10
 
 ### Corregido

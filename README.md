@@ -134,16 +134,20 @@ push, y **Build APK** compila el instalador.
 2. Abre la última ejecución de **Build APK** que aparezca en verde.
 3. Al final de la página, en **Artifacts**, descarga `planificamina-apk`.
 
-Es un `.zip` con el APK universal (`app-release.apk`) y los tres APK separados
-por arquitectura, que son bastante más livianos. Los artefactos caducan a los
-30 días y **solo se pueden descargar con la sesión de GitHub iniciada**.
+Es un `.zip` con un único archivo, `app-release.apk`: el APK universal, que se
+instala en cualquier teléfono Android sin tener que averiguar la arquitectura
+del procesador. Los artefactos caducan a los 30 días y **solo se pueden
+descargar con la sesión de GitHub iniciada**.
+
+Como va firmado con la clave de depuración, el teléfono pedirá autorizar la
+instalación desde orígenes desconocidos.
 
 Para un enlace público y permanente, crea una etiqueta de versión: eso publica
-un release con los APK adjuntos, descargables por cualquiera sin cuenta.
+un release con el APK adjunto, descargable por cualquiera sin cuenta.
 
 ```bash
-git tag v1.0.3
-git push origin v1.0.3
+git tag v1.0.4
+git push origin v1.0.4
 ```
 
 ---
