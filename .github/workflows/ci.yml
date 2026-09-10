@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Descargar el código
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Instalar Flutter
         uses: subosito/flutter-action@v2
