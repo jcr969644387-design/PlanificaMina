@@ -112,12 +112,24 @@ class Economics {
     return v;
   }
 
-  /// TIR por bisección. Devuelve null si no hay cambio de signo en el rango,
-  /// lo que ocurre cuando el proyecto nunca recupera la inversión.
+  /// TIR por bisección, buscada solo entre 0 % y [high].
+  ///
+  /// Devuelve null si no hay cambio de signo en el rango. Con el límite
+  /// inferior en cero, eso equivale a decir que la suma sin descontar de los
+  /// flujos no alcanza a cubrir el CAPEX: el proyecto nunca recupera la
+  /// inversión y la TIR deja de ser una cifra que valga la pena reportar. La
+  /// interfaz muestra ese caso como «—» y la exportación como «n/a».
+  ///
+  /// El límite inferior no se baja por debajo de cero a propósito. Con tasas
+  /// negativas el factor de descuento amplifica los flujos futuros en vez de
+  /// reducirlos, así que casi cualquier proyecto tiene una raíz muy negativa
+  /// (por ejemplo −89,6 % con un CAPEX de 1000 y flujos de 1). Esa raíz es un
+  /// artefacto algebraico, no una rentabilidad, y mostrarla confundiría al
+  /// estudiante.
   static double? irr({
     required double capex,
     required List<double> flows,
-    double low = -0.95,
+    double low = 0.0,
     double high = 5.0,
   }) {
     double f(double r) => npv(rate: r, capex: capex, flows: flows);

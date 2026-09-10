@@ -2,6 +2,22 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
+## [1.0.1] — 2026-09-10
+
+### Corregido
+- `Economics.irr` buscaba la raíz desde −95 %, así que devolvía una TIR
+  fuertemente negativa para proyectos que nunca recuperan la inversión, en vez
+  del `null` que la interfaz ya interpretaba como «no recupera la inversión».
+  Ahora la búsqueda parte de 0 %.
+- `ScoringEngine.compute` producía un `num` donde se esperaba un `double`, y
+  un `SectionTitle` constante interpolaba un valor de runtime: ambos rompían
+  el análisis estático.
+- Imports y variables locales sin usar en `analysis.dart` y `session.dart`.
+
+### Cambiado
+- `Color.withOpacity()` migrado a `Color.withValues(alpha:)`, lo que fija el
+  requisito mínimo en Flutter 3.27 / Dart 3.6.
+
 ## [1.0.0] — 2026-09-10
 
 ### Añadido
