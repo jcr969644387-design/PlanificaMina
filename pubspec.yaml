@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_riverpod: ^2.5.1
+  flutter_riverpod: ^3.4.3
   shared_preferences: ^2.2.3
   # Tercera dependencia, y la única añadida por una razón de producto: el SDK
   # de Flutter no sabe reproducir audio propio. SystemSound solo emite el clic
