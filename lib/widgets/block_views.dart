@@ -84,8 +84,8 @@ class _SectionPainter extends CustomPainter {
         } else {
           // El desmonte no desaparece: se apaga. El estudiante debe seguir
           // viendo que el material existe, solo que no es económico.
-          paint.color = Color.lerp(
-              AppColors.waste, AppColors.gradeColor(t), 0.18)!;
+          paint.color =
+              Color.lerp(AppColors.waste, AppColors.gradeColor(t), 0.18)!;
         }
         final rect = Rect.fromLTWH(i * cw, k * ch, cw + 0.6, ch + 0.6);
         canvas.drawRect(rect, paint);
@@ -112,10 +112,14 @@ class _SectionPainter extends CustomPainter {
         }
 
         final x0 = i * cw, y0 = k * ch, x1 = x0 + cw, y1 = y0 + ch;
-        if (!ore(i, k - 1)) canvas.drawLine(Offset(x0, y0), Offset(x1, y0), outline);
-        if (!ore(i, k + 1)) canvas.drawLine(Offset(x0, y1), Offset(x1, y1), outline);
-        if (!ore(i - 1, k)) canvas.drawLine(Offset(x0, y0), Offset(x0, y1), outline);
-        if (!ore(i + 1, k)) canvas.drawLine(Offset(x1, y0), Offset(x1, y1), outline);
+        if (!ore(i, k - 1))
+          canvas.drawLine(Offset(x0, y0), Offset(x1, y0), outline);
+        if (!ore(i, k + 1))
+          canvas.drawLine(Offset(x0, y1), Offset(x1, y1), outline);
+        if (!ore(i - 1, k))
+          canvas.drawLine(Offset(x0, y0), Offset(x0, y1), outline);
+        if (!ore(i + 1, k))
+          canvas.drawLine(Offset(x1, y0), Offset(x1, y1), outline);
       }
     }
   }
@@ -201,8 +205,7 @@ class _IsoPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final ore = <int, Block>{};
-    int key(int i, int j, int k) =>
-        (k * model.ny + j) * model.nx + i;
+    int key(int i, int j, int k) => (k * model.ny + j) * model.nx + i;
 
     for (final b in model.blocks) {
       if (CutoffCalculator.blockNsr(b, metals) >= cutoffNsr) {
@@ -261,8 +264,7 @@ class _IsoPainter extends CustomPainter {
     }
     final spanX = math.max(1e-6, maxX - minX);
     final spanY = math.max(1e-6, maxY - minY);
-    final scale =
-        math.min(size.width * 0.9 / spanX, size.height * 0.9 / spanY);
+    final scale = math.min(size.width * 0.9 / spanX, size.height * 0.9 / spanY);
     final offX = size.width / 2 - (minX + maxX) / 2 * scale;
     final offY = size.height / 2 - (minY + maxY) / 2 * scale;
 

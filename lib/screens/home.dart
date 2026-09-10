@@ -34,15 +34,13 @@ class HomeScreen extends ConsumerWidget {
               style: TextStyle(color: AppColors.textDim, height: 1.4),
             ),
             const SizedBox(height: 22),
-
             _ActionCard(
               title: 'Diagnóstico inicial',
               subtitle:
                   '6 preguntas. Responde antes de simular; las repetirás al '
                   'final para medir qué cambió.',
               icon: Icons.checklist_rtl,
-              done: session.preTest.length ==
-                  6,
+              done: session.preTest.length == 6,
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
                   builder: (_) => const AssessmentScreen(isPost: false))),
             ),
@@ -53,10 +51,9 @@ class HomeScreen extends ConsumerWidget {
                   'Las fórmulas que usa la app y, sobre todo, lo que este '
                   'modelo NO representa.',
               icon: Icons.menu_book_outlined,
-              onTap: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => const TheoryScreen())),
+              onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const TheoryScreen())),
             ),
-
             const SizedBox(height: 26),
             const SectionTitle('Casos de estudio',
                 subtitle:
@@ -75,7 +72,6 @@ class HomeScreen extends ConsumerWidget {
                     },
                   ),
                 )),
-
             const SizedBox(height: 24),
             Container(
               padding: const EdgeInsets.all(14),
@@ -199,16 +195,15 @@ class _CaseCard extends StatelessWidget {
                   ),
                   child: Text(
                     '${mineCase.model.count} bloques',
-                    style: const TextStyle(
-                        fontSize: 10, color: AppColors.textDim),
+                    style:
+                        const TextStyle(fontSize: 10, color: AppColors.textDim),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 3),
             Text(mineCase.subtitle,
-                style:
-                    const TextStyle(fontSize: 12, color: AppColors.ore)),
+                style: const TextStyle(fontSize: 12, color: AppColors.ore)),
             const SizedBox(height: 8),
             Text(mineCase.learningFocus,
                 style: const TextStyle(

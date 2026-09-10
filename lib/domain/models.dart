@@ -74,11 +74,9 @@ class Metal {
     }
   }
 
-  String get gradeSuffix =>
-      gradeUnit == GradeUnit.percent ? '%' : 'g/t';
+  String get gradeSuffix => gradeUnit == GradeUnit.percent ? '%' : 'g/t';
 
-  String get priceSuffix =>
-      priceUnit == PriceUnit.perPound ? r'$/lb' : r'$/oz';
+  String get priceSuffix => priceUnit == PriceUnit.perPound ? r'$/lb' : r'$/oz';
 
   /// Metal contenido en una tonelada de mineral, en lb u oz.
   double containedPerTonne(double grade) {
@@ -90,8 +88,7 @@ class Metal {
     }
   }
 
-  String get containedUnit =>
-      priceUnit == PriceUnit.perPound ? 'lb' : 'oz';
+  String get containedUnit => priceUnit == PriceUnit.perPound ? 'lb' : 'oz';
 }
 
 /// Estructura de costos operativos, en $/t.
@@ -212,9 +209,8 @@ class BlockModel {
       .map((b) => b.grade(symbol))
       .fold<double>(double.infinity, math.min);
 
-  double gradeMax(String symbol) => blocks
-      .map((b) => b.grade(symbol))
-      .fold<double>(0, math.max);
+  double gradeMax(String symbol) =>
+      blocks.map((b) => b.grade(symbol)).fold<double>(0, math.max);
 }
 
 /// Una fase de explotación: pushback en tajo abierto, nivel en subterránea.

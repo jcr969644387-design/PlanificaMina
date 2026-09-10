@@ -21,11 +21,11 @@ class AppColors {
   static Color gradeColor(double t) {
     final v = t.clamp(0.0, 1.0).toDouble();
     if (v < 0.5) {
-      return Color.lerp(const Color(0xFF2E4159), const Color(0xFF7C8F5A),
-          v / 0.5)!;
+      return Color.lerp(
+          const Color(0xFF2E4159), const Color(0xFF7C8F5A), v / 0.5)!;
     }
-    return Color.lerp(const Color(0xFF7C8F5A), const Color(0xFFF2C14E),
-        (v - 0.5) / 0.5)!;
+    return Color.lerp(
+        const Color(0xFF7C8F5A), const Color(0xFFF2C14E), (v - 0.5) / 0.5)!;
   }
 }
 
@@ -73,8 +73,7 @@ class Fmt {
   static String mt(double tonnes, {int decimals = 2}) =>
       '${(tonnes / 1e6).toStringAsFixed(decimals)} Mt';
 
-  static String kt(double tonnes) =>
-      '${(tonnes / 1e3).toStringAsFixed(0)} kt';
+  static String kt(double tonnes) => '${(tonnes / 1e3).toStringAsFixed(0)} kt';
 
   static String pct(double fraction, {int decimals = 1}) =>
       '${(fraction * 100).toStringAsFixed(decimals)} %';
@@ -116,9 +115,7 @@ class KpiTile extends StatelessWidget {
         children: [
           Text(label,
               style: const TextStyle(
-                  fontSize: 11,
-                  color: AppColors.textDim,
-                  letterSpacing: 0.3)),
+                  fontSize: 11, color: AppColors.textDim, letterSpacing: 0.3)),
           const SizedBox(height: 4),
           Text(value,
               style: TextStyle(
@@ -149,9 +146,7 @@ class SectionTitle extends StatelessWidget {
       children: [
         Text(text,
             style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 0.2)),
+                fontSize: 15, fontWeight: FontWeight.w700, letterSpacing: 0.2)),
         if (subtitle != null) ...[
           const SizedBox(height: 2),
           Text(subtitle!,

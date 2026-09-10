@@ -64,8 +64,8 @@ class CaseRepository {
             grade += 0.25 * rng.noise();
           } else {
             // Encajonante con halo de baja ley.
-            grade = 0.35 * math.exp(-1.1 * (dist - halfWidth)) +
-                0.12 * rng.next();
+            grade =
+                0.35 * math.exp(-1.1 * (dist - halfWidth)) + 0.12 * rng.next();
           }
           grade = grade.clamp(0.02, 6.0).toDouble();
 
@@ -91,8 +91,7 @@ class CaseRepository {
       id: 'au_underground',
       name: 'Veta San Rafael',
       subtitle: 'Oro subterráneo · cámaras y pilares',
-      geologyNote:
-          'Veta epitermal de cuarzo-oro, subvertical, con un clavo '
+      geologyNote: 'Veta epitermal de cuarzo-oro, subvertical, con un clavo '
           'mineralizado en el centro del rumbo. Potencia de 20 a 30 m que '
           'disminuye en profundidad. Yacimiento ficticio, representativo de '
           'sistemas vetiformes de oro.',
@@ -479,7 +478,8 @@ class CaseRepository {
             'Caída de precios del 17 %, costos 12 % arriba y recuperación '
             'tres puntos menor por mineral más duro.',
         prices: scale(base, 0.83),
-        recoveries: rec.map((k, v) => MapEntry(k, (v - 0.03).clamp(0.3, 0.99).toDouble())),
+        recoveries: rec
+            .map((k, v) => MapEntry(k, (v - 0.03).clamp(0.3, 0.99).toDouble())),
         costs: c.costs.copyWith(
           mining: c.costs.mining * 1.12,
           processing: c.costs.processing * 1.12,
@@ -489,11 +489,11 @@ class CaseRepository {
       NamedScenario(
         id: 'optimista',
         label: 'Optimista',
-        description:
-            'Ciclo alto de precios (+22 %), costos 8 % abajo y mejora '
+        description: 'Ciclo alto de precios (+22 %), costos 8 % abajo y mejora '
             'metalúrgica de dos puntos.',
         prices: scale(base, 1.22),
-        recoveries: rec.map((k, v) => MapEntry(k, (v + 0.02).clamp(0.3, 0.99).toDouble())),
+        recoveries: rec
+            .map((k, v) => MapEntry(k, (v + 0.02).clamp(0.3, 0.99).toDouble())),
         costs: c.costs.copyWith(
           mining: c.costs.mining * 0.92,
           processing: c.costs.processing * 0.92,

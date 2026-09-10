@@ -68,8 +68,7 @@ void main() {
     /// del tema: si la recuperación baja, la ley de corte DEBE subir.
     test('menor recuperación implica MAYOR ley de corte', () {
       final alta = CutoffCalculator.nsrToGrade(88, au);
-      final baja =
-          CutoffCalculator.nsrToGrade(88, au.copyWith(recovery: 0.85));
+      final baja = CutoffCalculator.nsrToGrade(88, au.copyWith(recovery: 0.85));
       expect(baja, greaterThan(alta));
       expect(baja, closeTo(1.7976, 0.002));
     });
@@ -117,8 +116,7 @@ void main() {
         grades: {'Zn': 4.0, 'Pb': 1.2, 'Ag': 55.0},
         phaseIndex: 0,
       );
-      expect(CutoffCalculator.blockNsr(b, poly.metals),
-          closeTo(91.7245, 0.01));
+      expect(CutoffCalculator.blockNsr(b, poly.metals), closeTo(91.7245, 0.01));
     });
   });
 
@@ -143,7 +141,8 @@ void main() {
 
       test('${c.name}: bajar el precio reduce el tonelaje económico', () {
         final metals = c.metals;
-        final low = metals.map((m) => m.copyWith(price: m.price * 0.80)).toList();
+        final low =
+            metals.map((m) => m.copyWith(price: m.price * 0.80)).toList();
         final a = CutoffCalculator.classify(
             model: c.model, metals: metals, cutoffNsr: c.costs.total);
         final b = CutoffCalculator.classify(

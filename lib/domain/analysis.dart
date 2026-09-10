@@ -44,10 +44,10 @@ class SensitivityAnalysis {
     bars.add(SensitivityBar(
       variable: 'Precio $primary',
       baseNpv: baseNpv,
-      lowNpv: npvFor(base.copyWith(
-          prices: {...base.prices, primary: p0 * (1 - delta)})),
-      highNpv: npvFor(base.copyWith(
-          prices: {...base.prices, primary: p0 * (1 + delta)})),
+      lowNpv: npvFor(
+          base.copyWith(prices: {...base.prices, primary: p0 * (1 - delta)})),
+      highNpv: npvFor(
+          base.copyWith(prices: {...base.prices, primary: p0 * (1 + delta)})),
       lowLabel: '-${(delta * 100).toStringAsFixed(0)}%',
       highLabel: '+${(delta * 100).toStringAsFixed(0)}%',
     ));
@@ -71,11 +71,9 @@ class SensitivityAnalysis {
       variable: 'Costo mina',
       baseNpv: baseNpv,
       lowNpv: npvFor(base.copyWith(
-          costs:
-              base.costs.copyWith(mining: base.costs.mining * (1 - delta)))),
+          costs: base.costs.copyWith(mining: base.costs.mining * (1 - delta)))),
       highNpv: npvFor(base.copyWith(
-          costs:
-              base.costs.copyWith(mining: base.costs.mining * (1 + delta)))),
+          costs: base.costs.copyWith(mining: base.costs.mining * (1 + delta)))),
       lowLabel: '-${(delta * 100).toStringAsFixed(0)}%',
       highLabel: '+${(delta * 100).toStringAsFixed(0)}%',
     ));

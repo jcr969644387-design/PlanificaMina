@@ -84,8 +84,7 @@ class _WorkspaceScreenState extends ConsumerState<WorkspaceScreen> {
         destinations: const [
           NavigationDestination(
               icon: Icon(Icons.grid_view_outlined), label: 'Modelo'),
-          NavigationDestination(
-              icon: Icon(Icons.tune), label: 'Ley corte'),
+          NavigationDestination(icon: Icon(Icons.tune), label: 'Ley corte'),
           NavigationDestination(
               icon: Icon(Icons.calendar_month_outlined), label: 'Programa'),
           NavigationDestination(
@@ -117,8 +116,7 @@ class _ModelTabState extends ConsumerState<_ModelTab> {
     final s = ref.watch(sessionProvider);
     final maxNsr = s.maxNsrForSlider();
     final stats = s.reservesAt(s.params.cutoffNsr);
-    final int sectionIndex =
-        _section.clamp(0, s.mineCase.model.ny - 1).toInt();
+    final int sectionIndex = _section.clamp(0, s.mineCase.model.ny - 1).toInt();
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(14, 14, 14, 28),
@@ -172,8 +170,8 @@ class _ModelTabState extends ConsumerState<_ModelTab> {
                 ),
               ),
               Text('${sectionIndex + 1}/${s.mineCase.model.ny}',
-                  style: const TextStyle(
-                      fontSize: 11, color: AppColors.textDim)),
+                  style:
+                      const TextStyle(fontSize: 11, color: AppColors.textDim)),
             ],
           ),
         ],
@@ -227,8 +225,7 @@ class _StatsGrid extends StatelessWidget {
             value: Fmt.grade(
                 stats.averageGrades[primary.symbol] ?? 0, primary.gradeSuffix)),
         KpiTile(
-            label: 'NSR MEDIO',
-            value: '${Fmt.dollars(stats.averageNsr)} /t'),
+            label: 'NSR MEDIO', value: '${Fmt.dollars(stats.averageNsr)} /t'),
         KpiTile(
             label: session.mineCase.method == MiningMethod.openPit
                 ? 'RELACIÓN DE DESCAPOTE'
@@ -297,8 +294,7 @@ class _CutoffTab extends ConsumerWidget {
                   if (!s.mineCase.isPolymetallic)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 6),
-                      child: Text(
-                          '= ${Fmt.dollars(s.params.cutoffNsr)} /t NSR',
+                      child: Text('= ${Fmt.dollars(s.params.cutoffNsr)} /t NSR',
                           style: const TextStyle(
                               fontSize: 12, color: AppColors.textDim)),
                     ),
@@ -364,7 +360,8 @@ class _CutoffTab extends ConsumerWidget {
         const SectionTitle('Variables del escenario'),
         const SizedBox(height: 8),
         ...s.mineCase.metals.map((m) {
-          final range = s.mineCase.priceRange[m.symbol] ?? [m.price * 0.6, m.price * 1.6];
+          final range =
+              s.mineCase.priceRange[m.symbol] ?? [m.price * 0.6, m.price * 1.6];
           return _SliderRow(
             label: 'Precio ${m.name}',
             value: s.params.prices[m.symbol] ?? m.price,
@@ -454,9 +451,8 @@ class _FormulaBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final m = session.activeMetals.first;
-    final factor = m.priceUnit == PriceUnit.perPound
-        ? '22,0462'
-        : '1 / 31,1035';
+    final factor =
+        m.priceUnit == PriceUnit.perPound ? '22,0462' : '1 / 31,1035';
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -479,8 +475,8 @@ class _FormulaBox extends StatelessWidget {
             'La recuperación DIVIDE. Si la planta recupera menos, hace falta '
             'más ley para pagar el mismo costo, así que la ley de corte sube y '
             'las reservas caen. Es el error más frecuente del tema.',
-            style: TextStyle(
-                fontSize: 11, color: AppColors.textDim, height: 1.4),
+            style:
+                TextStyle(fontSize: 11, color: AppColors.textDim, height: 1.4),
           ),
           const SizedBox(height: 6),
           Text(
@@ -529,11 +525,10 @@ class _CriterionChip extends StatelessWidget {
               ? AppColors.ore.withValues(alpha: 0.20)
               : AppColors.surfaceAlt,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-              color: active ? AppColors.ore : Colors.transparent),
+          border:
+              Border.all(color: active ? AppColors.ore : Colors.transparent),
         ),
-        child: Text('$label  ·  $text',
-            style: const TextStyle(fontSize: 11.5)),
+        child: Text('$label  ·  $text', style: const TextStyle(fontSize: 11.5)),
       ),
     );
   }
@@ -599,8 +594,7 @@ class _ScheduleTab extends ConsumerWidget {
       padding: const EdgeInsets.fromLTRB(14, 14, 14, 28),
       children: [
         const SectionTitle('Secuencia de extracción',
-            subtitle:
-                'Arrastra para reordenar. El sistema no optimiza por ti: '
+            subtitle: 'Arrastra para reordenar. El sistema no optimiza por ti: '
                 'valida lo que decides.'),
         const SizedBox(height: 10),
         ReorderableListView(
@@ -627,7 +621,6 @@ class _ScheduleTab extends ConsumerWidget {
           'Capacidad de mina: ${Fmt.mt(s.mineCase.mineCapacity)}/año',
           style: const TextStyle(fontSize: 11, color: AppColors.textDim),
         ),
-
         const SizedBox(height: 16),
         if (r.issues.isNotEmpty) ...[
           const SectionTitle('Validación del plan'),
@@ -635,7 +628,6 @@ class _ScheduleTab extends ConsumerWidget {
           ...r.issues.map((i) => _IssueTile(issue: i)),
           const SizedBox(height: 12),
         ],
-
         SectionTitle('Programa de producción',
             subtitle: 'Vida de mina: ${r.lifeYears} años'),
         const SizedBox(height: 8),
@@ -647,8 +639,8 @@ class _ScheduleTab extends ConsumerWidget {
   Widget _phaseTile(SessionViewModel s, int position) {
     final idx = s.params.phaseOrder[position];
     final phase = s.mineCase.phases.firstWhere((p) => p.index == idx);
-    final blocked = phase.requires.any((req) =>
-        s.params.phaseOrder.indexOf(req) > position);
+    final blocked = phase.requires
+        .any((req) => s.params.phaseOrder.indexOf(req) > position);
     return Container(
       key: ValueKey('phase_$idx'),
       margin: const EdgeInsets.only(bottom: 8),
@@ -665,8 +657,8 @@ class _ScheduleTab extends ConsumerWidget {
             radius: 13,
             backgroundColor:
                 blocked ? AppColors.negative : AppColors.surfaceAlt,
-            child: Text('${position + 1}',
-                style: const TextStyle(fontSize: 11)),
+            child:
+                Text('${position + 1}', style: const TextStyle(fontSize: 11)),
           ),
           const SizedBox(width: 10),
           Expanded(
@@ -682,9 +674,7 @@ class _ScheduleTab extends ConsumerWidget {
                       : phase.description,
                   style: TextStyle(
                       fontSize: 11,
-                      color: blocked
-                          ? AppColors.negative
-                          : AppColors.textDim),
+                      color: blocked ? AppColors.negative : AppColors.textDim),
                 ),
               ],
             ),
@@ -748,8 +738,7 @@ class _ScheduleTable extends StatelessWidget {
     if (result.periods.isEmpty) {
       return const _InfoBox(
         title: 'Sin programa',
-        body:
-            'No hay material sobre la ley de corte con los parámetros '
+        body: 'No hay material sobre la ley de corte con los parámetros '
             'actuales. Baja la ley de corte o revisa el escenario de precios.',
       );
     }
@@ -767,8 +756,7 @@ class _ScheduleTable extends StatelessWidget {
           const DataColumn(
               label: Text('Desmonte', style: TextStyle(fontSize: 11))),
           DataColumn(
-              label: Text('Ley $symbol',
-                  style: const TextStyle(fontSize: 11))),
+              label: Text('Ley $symbol', style: const TextStyle(fontSize: 11))),
           const DataColumn(
               label: Text('Ingreso', style: TextStyle(fontSize: 11))),
           const DataColumn(
@@ -777,8 +765,8 @@ class _ScheduleTable extends StatelessWidget {
         ],
         rows: result.periods
             .map((p) => DataRow(cells: [
-                  DataCell(Text('${p.year}',
-                      style: const TextStyle(fontSize: 11))),
+                  DataCell(
+                      Text('${p.year}', style: const TextStyle(fontSize: 11))),
                   DataCell(Text(Fmt.kt(p.oreTonnes),
                       style: const TextStyle(fontSize: 11))),
                   DataCell(Text(Fmt.kt(p.wasteTonnes),
@@ -839,8 +827,7 @@ class _EconomicsTabState extends ConsumerState<_EconomicsTab> {
             KpiTile(
               label: 'VAN @ ${Fmt.pct(s.params.discountRate, decimals: 0)}',
               value: Fmt.money(r.npv),
-              valueColor:
-                  r.npv >= 0 ? AppColors.positive : AppColors.negative,
+              valueColor: r.npv >= 0 ? AppColors.positive : AppColors.negative,
             ),
             KpiTile(
               label: 'TIR',
@@ -851,24 +838,19 @@ class _EconomicsTabState extends ConsumerState<_EconomicsTab> {
                   : AppColors.negative,
             ),
             KpiTile(
-                label: 'PAYBACK DESCONTADO',
-                value: Fmt.years(r.paybackYears)),
+                label: 'PAYBACK DESCONTADO', value: Fmt.years(r.paybackYears)),
             KpiTile(
                 label: 'AISC',
-                value:
-                    '${Fmt.dollars(r.aisc)} /${primary.containedUnit}'),
+                value: '${Fmt.dollars(r.aisc)} /${primary.containedUnit}'),
             KpiTile(label: 'CAPEX', value: Fmt.money(r.capex)),
-            KpiTile(
-                label: 'VIDA DE MINA', value: '${r.lifeYears} años'),
+            KpiTile(label: 'VIDA DE MINA', value: '${r.lifeYears} años'),
           ],
         ),
-
         const SizedBox(height: 20),
         const SectionTitle('Flujo de caja',
             subtitle: 'Barras: flujo anual. Línea: VAN acumulado.'),
         const SizedBox(height: 8),
         CashflowChart(result: r, discountRate: s.params.discountRate),
-
         const SizedBox(height: 20),
         Row(
           children: [
@@ -912,7 +894,6 @@ class _EconomicsTabState extends ConsumerState<_EconomicsTab> {
             'cuando tu plan esté estable.',
             style: TextStyle(fontSize: 11.5, color: AppColors.textDim),
           ),
-
         const SizedBox(height: 22),
         const SectionTitle('Exportar',
             subtitle:
@@ -1000,8 +981,8 @@ class _TutorTab extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
               _ScoreBar('Valor económico', score.valueScore, 35),
-              _ScoreBar('Cumplimiento de restricciones',
-                  score.complianceScore, 25),
+              _ScoreBar(
+                  'Cumplimiento de restricciones', score.complianceScore, 25),
               _ScoreBar('Robustez ante escenarios', score.robustnessScore, 15),
               _ScoreBar('Comprensión conceptual', score.understandingScore, 25),
               const SizedBox(height: 8),
@@ -1051,11 +1032,11 @@ class _ScoreBar extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(3),
               child: LinearProgressIndicator(
-                value: max <= 0 ? 0.0 : (value / max).clamp(0.0, 1.0).toDouble(),
+                value:
+                    max <= 0 ? 0.0 : (value / max).clamp(0.0, 1.0).toDouble(),
                 minHeight: 6,
                 backgroundColor: AppColors.surfaceAlt,
-                valueColor:
-                    const AlwaysStoppedAnimation<Color>(AppColors.ore),
+                valueColor: const AlwaysStoppedAnimation<Color>(AppColors.ore),
               ),
             ),
           ),
@@ -1155,8 +1136,8 @@ class _InfoBox extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title,
-              style: const TextStyle(
-                  fontSize: 12, fontWeight: FontWeight.w700)),
+              style:
+                  const TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
           const SizedBox(height: 5),
           Text(body,
               style: const TextStyle(

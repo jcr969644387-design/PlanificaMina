@@ -63,8 +63,7 @@ class _GtPainter extends CustomPainter {
       ..color = AppColors.surfaceAlt
       ..strokeWidth = 1;
     canvas.drawLine(const Offset(padL, padT), Offset(padL, padT + h), axis);
-    canvas.drawLine(
-        Offset(padL, padT + h), Offset(padL + w, padT + h), axis);
+    canvas.drawLine(Offset(padL, padT + h), Offset(padL + w, padT + h), axis);
 
     Offset ptTon(GradeTonnagePoint p) => Offset(
           padL + w * p.cutoffNsr / maxCut,
@@ -75,9 +74,10 @@ class _GtPainter extends CustomPainter {
           padT + h * (1 - (maxGrade <= 0 ? 0 : p.averageNsr / maxGrade)),
         );
 
-    final tonPath = Path()..moveTo(ptTon(points.first).dx, ptTon(points.first).dy);
-    final gradePath =
-        Path()..moveTo(ptGrade(points.first).dx, ptGrade(points.first).dy);
+    final tonPath = Path()
+      ..moveTo(ptTon(points.first).dx, ptTon(points.first).dy);
+    final gradePath = Path()
+      ..moveTo(ptGrade(points.first).dx, ptGrade(points.first).dy);
     for (final p in points.skip(1)) {
       tonPath.lineTo(ptTon(p).dx, ptTon(p).dy);
       gradePath.lineTo(ptGrade(p).dx, ptGrade(p).dy);
@@ -173,8 +173,8 @@ class _TornadoPainter extends CustomPainter {
         Paint()..color = AppColors.negative.withValues(alpha: 0.85),
       );
       canvas.drawRect(
-        Rect.fromLTRB(math.min(zero, xHigh), y + 14, math.max(zero, xHigh),
-            y + 26),
+        Rect.fromLTRB(
+            math.min(zero, xHigh), y + 14, math.max(zero, xHigh), y + 26),
         Paint()..color = AppColors.positive.withValues(alpha: 0.85),
       );
 

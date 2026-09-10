@@ -23,8 +23,8 @@ class CsvExporter {
     b.writeln('Tasa de descuento;${_n(params.discountRate * 100)}%');
     b.writeln('');
 
-    final header = StringBuffer(
-        'Anio;Mineral (t);Desmonte (t);Total movido (t)');
+    final header =
+        StringBuffer('Anio;Mineral (t);Desmonte (t);Total movido (t)');
     for (final m in metals) {
       header.write(';Ley ${m.symbol} (${m.gradeSuffix})');
     }
@@ -57,7 +57,8 @@ class CsvExporter {
     b.writeln('INDICADORES');
     b.writeln('CAPEX (US\$);${_n(result.capex, 0)}');
     b.writeln('VAN (US\$);${_n(result.npv, 0)}');
-    b.writeln('TIR;${result.irr == null ? "n/a" : "${_n(result.irr! * 100)}%"}');
+    b.writeln(
+        'TIR;${result.irr == null ? "n/a" : "${_n(result.irr! * 100)}%"}');
     b.writeln('Payback descontado (anios);'
         '${result.paybackYears == null ? "n/a" : _n(result.paybackYears!)}');
     b.writeln('AISC (US\$/${metals.first.containedUnit});${_n(result.aisc)}');
@@ -90,8 +91,8 @@ class CsvExporter {
       for (final m in metals) {
         nsr += blk.grade(m.symbol) * m.valuePerUnitGrade;
       }
-      final row = StringBuffer(
-          '${blk.i};${blk.j};${blk.k};${_n(blk.tonnage, 0)}');
+      final row =
+          StringBuffer('${blk.i};${blk.j};${blk.k};${_n(blk.tonnage, 0)}');
       for (final m in metals) {
         row.write(';${_n(blk.grade(m.symbol), 3)}');
       }

@@ -50,9 +50,7 @@ class _ReflectionSheetState extends ConsumerState<ReflectionSheet> {
           const SizedBox(height: 16),
           const Text('UN MOMENTO',
               style: TextStyle(
-                  fontSize: 10,
-                  color: AppColors.ore,
-                  letterSpacing: 1.2)),
+                  fontSize: 10, color: AppColors.ore, letterSpacing: 1.2)),
           const SizedBox(height: 8),
           Text(p.prompt,
               style: const TextStyle(
@@ -219,8 +217,8 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
                             border: Border.all(color: border),
                           ),
                           child: Text(q.options[i],
-                              style: const TextStyle(
-                                  fontSize: 12, height: 1.35)),
+                              style:
+                                  const TextStyle(fontSize: 12, height: 1.35)),
                         ),
                       ),
                     );
@@ -298,8 +296,8 @@ class _ResultPanel extends ConsumerWidget {
                 isPost
                     ? 'Diagnóstico $pre/$total  →  Cierre $post/$total'
                     : 'Diagnóstico: $pre/$total',
-                style: const TextStyle(
-                    fontSize: 17, fontWeight: FontWeight.w700),
+                style:
+                    const TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 8),
               Text(
@@ -321,8 +319,7 @@ class _ResultPanel extends ConsumerWidget {
         if (isPost) ...[
           const SizedBox(height: 18),
           const SectionTitle('Tarea de transferencia',
-              subtitle:
-                  'Se resuelve en papel, sin la aplicación. Es la única '
+              subtitle: 'Se resuelve en papel, sin la aplicación. Es la única '
                   'evidencia real de que aprendiste el concepto y no la '
                   'interfaz.'),
           const SizedBox(height: 10),
@@ -344,8 +341,8 @@ class _ResultPanel extends ConsumerWidget {
             onPressed: () {
               Clipboard.setData(
                   const ClipboardData(text: AssessmentRepository.transferTask));
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Tarea copiada')));
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('Tarea copiada')));
             },
           ),
         ],

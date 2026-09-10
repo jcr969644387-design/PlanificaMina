@@ -139,8 +139,7 @@ class TutorEngine {
       findings.add(TutorFinding(
         level: FindingLevel.critical,
         title: 'El proyecto destruye valor: VAN negativo',
-        explanation:
-            'Con esta configuración el VAN es '
+        explanation: 'Con esta configuración el VAN es '
             '${_money(result.npv)} a una tasa del '
             '${(params.discountRate * 100).toStringAsFixed(1)} %. Antes de '
             'ajustar la ley de corte, revisa si el problema es de escala '

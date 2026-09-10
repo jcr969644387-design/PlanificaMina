@@ -19,8 +19,7 @@ class TheoryScreen extends StatelessWidget {
             title: 'Ley de corte breakeven',
             formula:
                 'ley = Costo total ÷ (factor × Precio neto × Recuperación)',
-            body:
-                'Costo total = minado + procesamiento + G&A. Responde si el '
+            body: 'Costo total = minado + procesamiento + G&A. Responde si el '
                 'yacimiento en su conjunto paga. El factor de unidades es '
                 '22,0462 para leyes en % con precio en \$/lb, y 1/31,1035 para '
                 'leyes en g/t con precio en \$/oz.',
@@ -40,8 +39,7 @@ class TheoryScreen extends StatelessWidget {
             title: 'Ley de corte de Lane',
             formula:
                 'ley = (Costos incrementales + costo de oportunidad) ÷ valor unitario',
-            body:
-                'El costo de oportunidad es (costos de tiempo + tasa × VAN '
+            body: 'El costo de oportunidad es (costos de tiempo + tasa × VAN '
                 'remanente) ÷ capacidad del cuello de botella. Procesar una '
                 'tonelada pobre hoy ocupa capacidad que podría usar una '
                 'tonelada rica. Como el VAN remanente es máximo al inicio y '
@@ -52,7 +50,8 @@ class TheoryScreen extends StatelessWidget {
           ),
           _Concept(
             title: 'NSR (Net Smelter Return)',
-            formula: 'NSR = Σ ley × (precio × pagabilidad − cargos) × factor × recuperación',
+            formula:
+                'NSR = Σ ley × (precio × pagabilidad − cargos) × factor × recuperación',
             body:
                 'Con más de un metal no existe "una ley de corte": la decisión '
                 'se toma sobre el valor neto por tonelada. La app usa NSR '
@@ -63,8 +62,7 @@ class TheoryScreen extends StatelessWidget {
           _Concept(
             title: 'VAN, TIR y payback',
             formula: 'VAN = −CAPEX + Σ FCLₜ ÷ (1+i)ᵗ',
-            body:
-                'La TIR es la tasa que anula el VAN; la app la resuelve por '
+            body: 'La TIR es la tasa que anula el VAN; la app la resuelve por '
                 'bisección y devuelve "sin valor" cuando el proyecto nunca '
                 'recupera la inversión, que es lo correcto: en flujos no '
                 'convencionales la TIR puede no existir o ser múltiple.',
@@ -102,8 +100,8 @@ class _Concept extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title,
-              style: const TextStyle(
-                  fontSize: 14, fontWeight: FontWeight.w700)),
+              style:
+                  const TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
           const SizedBox(height: 8),
           Container(
             width: double.infinity,
@@ -181,8 +179,7 @@ class _Limits extends StatelessWidget {
                         style: TextStyle(color: AppColors.warning)),
                     Expanded(
                       child: Text(t,
-                          style: const TextStyle(
-                              fontSize: 11.5, height: 1.5)),
+                          style: const TextStyle(fontSize: 11.5, height: 1.5)),
                     ),
                   ],
                 ),

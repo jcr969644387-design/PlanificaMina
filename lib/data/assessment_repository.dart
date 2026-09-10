@@ -45,8 +45,7 @@ class AssessmentRepository {
   static const List<Question> diagnostic = [
     Question(
       id: 'q1',
-      prompt:
-          'La recuperación metalúrgica de la planta baja de 92 % a 85 %. '
+      prompt: 'La recuperación metalúrgica de la planta baja de 92 % a 85 %. '
           'Manteniendo todo lo demás igual, la ley de corte:',
       options: [
         'Sube: hace falta más ley para pagar el mismo costo',

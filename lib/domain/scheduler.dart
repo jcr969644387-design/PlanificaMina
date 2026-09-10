@@ -49,8 +49,7 @@ class PeriodResult {
 
   double get totalMoved => oreTonnes + wasteTonnes;
 
-  double get operatingCost =>
-      miningCost + processingCost + gaCost;
+  double get operatingCost => miningCost + processingCost + gaCost;
 
   double get ebitda => revenue - operatingCost;
 
@@ -84,14 +83,11 @@ class ScheduleResult {
 
   int get lifeYears => periods.length;
 
-  bool get hasErrors =>
-      issues.any((i) => i.severity == IssueSeverity.error);
+  bool get hasErrors => issues.any((i) => i.severity == IssueSeverity.error);
 
-  double get totalOre =>
-      periods.fold<double>(0, (s, p) => s + p.oreTonnes);
+  double get totalOre => periods.fold<double>(0, (s, p) => s + p.oreTonnes);
 
-  double get totalWaste =>
-      periods.fold<double>(0, (s, p) => s + p.wasteTonnes);
+  double get totalWaste => periods.fold<double>(0, (s, p) => s + p.wasteTonnes);
 
   /// Perfil de ley de alimentación, útil para detectar high-grading.
   List<double> feedGradeProfile(String symbol) =>
@@ -339,8 +335,7 @@ class Scheduler {
       final gaCost = oreYear * params.costs.ga;
       final sustaining = oreYear * params.costs.sustaining;
       final royalty = revenue * mineCase.royaltyRate;
-      final ebit =
-          revenue - miningCost - processingCost - gaCost - royalty;
+      final ebit = revenue - miningCost - processingCost - gaCost - royalty;
       final tax = ebit > 0 ? ebit * mineCase.taxRate : 0.0;
       final fcf = ebit - tax - sustaining;
 
@@ -407,9 +402,7 @@ class Scheduler {
     // AISC referido al metal principal.
     final primary = metals.first;
     final totalCost = periods.fold<double>(
-        0,
-        (s, p) =>
-            s + p.operatingCost + p.sustainingCost + p.royalty);
+        0, (s, p) => s + p.operatingCost + p.sustainingCost + p.royalty);
     final primaryUnits = totalRecovered[primary.symbol] ?? 0;
     final aisc = primaryUnits <= 0 ? 0.0 : totalCost / primaryUnits;
 
