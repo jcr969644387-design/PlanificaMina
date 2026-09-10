@@ -45,6 +45,16 @@ flutter create --platforms=android,ios .
 
 Esto conserva `lib/`, `test/` y `pubspec.yaml`, y solo añade los andamios de plataforma.
 
+> **Ojo:** `flutter create` también repone los archivos del template que falten,
+> y uno de ellos es `test/widget_test.dart` — el test del contador de ejemplo.
+> Ese archivo espera un `MyApp` que aquí no existe (la raíz es
+> `PlanificaMinaApp`), así que rompe `flutter test`. Bórralo después de generar
+> los andamios:
+>
+> ```bash
+> rm test/widget_test.dart
+> ```
+
 **Versión web** (útil para mostrarla sin instalar nada):
 
 ```bash
@@ -132,8 +142,8 @@ Para un enlace público y permanente, crea una etiqueta de versión: eso publica
 un release con los APK adjuntos, descargables por cualquiera sin cuenta.
 
 ```bash
-git tag v1.0.2
-git push origin v1.0.2
+git tag v1.0.3
+git push origin v1.0.3
 ```
 
 ---

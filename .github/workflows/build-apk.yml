@@ -40,17 +40,26 @@ jobs:
       - name: Descargar dependencias
         run: flutter pub get
 
+      # Las pruebas corren ANTES de generar el andamio: son de dominio puro, no
+      # necesitan plataforma, y así se ejecutan sobre el mismo árbol que valida
+      # el workflow CI.
+      - name: Pruebas antes de compilar
+        run: flutter test
+
       # El repositorio no versiona las carpetas android/ e ios/ porque son
       # andamios generados. Si no existen, se crean aquí sin tocar lib/.
+      #
+      # `flutter create` repone todos los archivos del template que falten, y
+      # eso incluye test/widget_test.dart: el test del contador, que espera un
+      # `MyApp` que este proyecto no tiene (la raíz es `PlanificaMinaApp`). Si
+      # se queda en el árbol, rompe cualquier `flutter test` posterior.
       - name: Generar andamio de Android si hace falta
         run: |
           if [ ! -d "android" ]; then
             echo "Carpeta android/ ausente: generándola."
             flutter create --platforms=android --project-name planificamina .
+            rm -f test/widget_test.dart
           fi
-
-      - name: Pruebas antes de compilar
-        run: flutter test
 
       - name: Compilar APK
         run: flutter build apk --release

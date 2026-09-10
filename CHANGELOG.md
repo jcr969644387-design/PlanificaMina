@@ -2,6 +2,26 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
+## [1.0.3] — 2026-09-10
+
+### Corregido
+- El workflow «Build APK» nunca se había ejecutado: solo se disparaba con
+  etiquetas `v*` y el repositorio no tenía ninguna, así que no existía ningún
+  APK en ninguna parte. Ahora también se dispara en cada push a `main`.
+- En su primera ejecución falló en `flutter test`. La causa: `flutter create`,
+  que genera el andamio de Android, repone además los archivos del template
+  que falten, y uno es `test/widget_test.dart` — el test del contador, que
+  espera un `MyApp` inexistente aquí (la raíz es `PlanificaMinaApp`). Las
+  pruebas ahora corren antes de generar el andamio, y ese archivo se borra.
+- Las dos insignias del README apuntaban a `USUARIO/REPOSITORIO`, un
+  repositorio inexistente: el marcador de la plantilla nunca se sustituyó.
+  Igual en `.github/ISSUE_TEMPLATE/config.yml`.
+
+### Añadido
+- El README explica cómo descargar el APK desde Actions, advierte que los
+  artefactos caducan a los 30 días y exigen sesión iniciada, y avisa del
+  `test/widget_test.dart` que `flutter create` deja al generar los andamios.
+
 ## [1.0.2] — 2026-09-10
 
 ### Cambiado
