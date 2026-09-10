@@ -169,7 +169,7 @@ jobs:
           echo "APK firmado para distribución."
 
       - name: Publicar como artefacto de la ejecución
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: planificamina-apk
           path: build/app/outputs/flutter-apk/app-release.apk
