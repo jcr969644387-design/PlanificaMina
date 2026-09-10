@@ -97,7 +97,7 @@ class _SectionPainter extends CustomPainter {
     final outline = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.6
-      ..color = AppColors.ore.withOpacity(0.95);
+      ..color = AppColors.ore.withValues(alpha: 0.95);
 
     for (int k = 0; k < nz; k++) {
       for (int i = 0; i < nx; i++) {

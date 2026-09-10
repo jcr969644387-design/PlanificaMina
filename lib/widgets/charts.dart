@@ -62,7 +62,7 @@ class _GtPainter extends CustomPainter {
     final axis = Paint()
       ..color = AppColors.surfaceAlt
       ..strokeWidth = 1;
-    canvas.drawLine(Offset(padL, padT), Offset(padL, padT + h), axis);
+    canvas.drawLine(const Offset(padL, padT), Offset(padL, padT + h), axis);
     canvas.drawLine(
         Offset(padL, padT + h), Offset(padL + w, padT + h), axis);
 
@@ -102,11 +102,11 @@ class _GtPainter extends CustomPainter {
         Offset(x, padT),
         Offset(x, padT + h),
         Paint()
-          ..color = Colors.white.withOpacity(0.55)
+          ..color = Colors.white.withValues(alpha: 0.55)
           ..strokeWidth = 1.2);
 
     _label('Tonelaje', color: AppColors.info)
-        .paint(canvas, Offset(padL + 4, padT - 2));
+        .paint(canvas, const Offset(padL + 4, padT - 2));
     _label('Ley media', color: AppColors.ore)
         .paint(canvas, Offset(padL + w - 52, padT - 2));
     _label('Ley de corte (NSR \$/t) →')
@@ -159,7 +159,7 @@ class _TornadoPainter extends CustomPainter {
         Offset(zero, 8),
         Offset(zero, size.height - 8),
         Paint()
-          ..color = AppColors.textDim.withOpacity(0.5)
+          ..color = AppColors.textDim.withValues(alpha: 0.5)
           ..strokeWidth = 1);
 
     for (int i = 0; i < bars.length; i++) {
@@ -170,12 +170,12 @@ class _TornadoPainter extends CustomPainter {
 
       canvas.drawRect(
         Rect.fromLTRB(math.min(zero, xLow), y, math.max(zero, xLow), y + 12),
-        Paint()..color = AppColors.negative.withOpacity(0.85),
+        Paint()..color = AppColors.negative.withValues(alpha: 0.85),
       );
       canvas.drawRect(
         Rect.fromLTRB(math.min(zero, xHigh), y + 14, math.max(zero, xHigh),
             y + 26),
-        Paint()..color = AppColors.positive.withOpacity(0.85),
+        Paint()..color = AppColors.positive.withValues(alpha: 0.85),
       );
 
       _label(b.variable, size: 11, color: AppColors.text)
@@ -251,7 +251,7 @@ class _CashPainter extends CustomPainter {
         Offset(padL, toY(0)),
         Offset(padL + w, toY(0)),
         Paint()
-          ..color = AppColors.textDim.withOpacity(0.5)
+          ..color = AppColors.textDim.withValues(alpha: 0.5)
           ..strokeWidth = 1);
 
     final bw = w / periods.length;
@@ -268,8 +268,8 @@ class _CashPainter extends CustomPainter {
           rect,
           Paint()
             ..color = v >= 0
-                ? AppColors.positive.withOpacity(0.8)
-                : AppColors.negative.withOpacity(0.8));
+                ? AppColors.positive.withValues(alpha: 0.8)
+                : AppColors.negative.withValues(alpha: 0.8));
     }
 
     final path = Path();
@@ -290,9 +290,9 @@ class _CashPainter extends CustomPainter {
           ..color = AppColors.ore);
 
     _label('VAN acumulado', color: AppColors.ore)
-        .paint(canvas, Offset(padL + 2, padT));
+        .paint(canvas, const Offset(padL + 2, padT));
     _label('${(maxV / 1e6).toStringAsFixed(0)} M')
-        .paint(canvas, Offset(2, padT));
+        .paint(canvas, const Offset(2, padT));
     _label('${(minV / 1e6).toStringAsFixed(0)} M')
         .paint(canvas, Offset(2, padT + h - 10));
     _label('Año 1 … ${periods.length}')

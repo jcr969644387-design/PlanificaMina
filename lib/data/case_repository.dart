@@ -39,7 +39,7 @@ class CaseRepository {
     const nx = 20, ny = 5, nz = 10;
     const blockSize = 20.0;
     const density = 2.75;
-    final tonnage = blockSize * blockSize * blockSize * density; // 22 000 t
+    const tonnage = blockSize * blockSize * blockSize * density; // 22 000 t
 
     final rng = _Lcg(20240517);
     final blocks = <Block>[];
@@ -171,7 +171,7 @@ class CaseRepository {
     const nx = 22, ny = 14, nz = 10;
     const blockSize = 30.0;
     const density = 2.62;
-    final tonnage = blockSize * blockSize * blockSize * density; // 70 740 t
+    const tonnage = blockSize * blockSize * blockSize * density; // 70 740 t
 
     final rng = _Lcg(19980312);
     final blocks = <Block>[];
@@ -303,7 +303,7 @@ class CaseRepository {
     const nx = 18, ny = 6, nz = 10;
     const blockSize = 20.0;
     const density = 3.15;
-    final tonnage = blockSize * blockSize * blockSize * density;
+    const tonnage = blockSize * blockSize * blockSize * density;
 
     final rng = _Lcg(20070921);
     final blocks = <Block>[];
@@ -312,7 +312,7 @@ class CaseRepository {
       for (int j = 0; j < ny; j++) {
         for (int i = 0; i < nx; i++) {
           final center = 2.4 + 0.08 * k;
-          final halfWidth = 1.5;
+          const halfWidth = 1.5;
           final dist = (j - center).abs();
           final along = (i - nx / 2 + 1.0) / (nx / 2);
           final body = math.exp(-1.8 * along * along);

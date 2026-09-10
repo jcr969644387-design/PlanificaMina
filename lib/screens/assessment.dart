@@ -92,7 +92,7 @@ class _ReflectionSheetState extends ConsumerState<ReflectionSheet> {
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: (correct ? AppColors.positive : AppColors.warning)
-                    .withOpacity(0.12),
+                    .withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
@@ -154,7 +154,7 @@ class _AssessmentScreenState extends ConsumerState<AssessmentScreen> {
   Widget build(BuildContext context) {
     final s = ref.watch(sessionProvider);
     final answers = widget.isPost ? s.postTest : s.preTest;
-    final questions = AssessmentRepository.diagnostic;
+    const questions = AssessmentRepository.diagnostic;
     final complete = answers.length == questions.length;
 
     return Scaffold(
@@ -289,7 +289,7 @@ class _ResultPanel extends ConsumerWidget {
           decoration: BoxDecoration(
             color: AppColors.surface,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColors.ore.withOpacity(0.5)),
+            border: Border.all(color: AppColors.ore.withValues(alpha: 0.5)),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -333,8 +333,8 @@ class _ResultPanel extends ConsumerWidget {
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: AppColors.surfaceAlt),
             ),
-            child: Text(AssessmentRepository.transferTask,
-                style: const TextStyle(
+            child: const Text(AssessmentRepository.transferTask,
+                style: TextStyle(
                     fontSize: 12, height: 1.55, fontFamily: 'monospace')),
           ),
           const SizedBox(height: 10),

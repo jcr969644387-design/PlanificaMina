@@ -274,12 +274,13 @@ class ScoringEngine {
     compliance = math.max(0.0, compliance);
 
     // Robustez: 15 puntos por explorar escenarios.
-    final robustness = 15 * math.min(1.0, scenariosExplored / 4.0);
+    final double explored = math.min(1.0, scenariosExplored / 4.0);
+    final double robustness = 15.0 * explored;
 
     // Comprensión conceptual: 25 puntos por respuestas de reflexión.
-    final understanding = reflectionsTotal <= 0
+    final double understanding = reflectionsTotal <= 0
         ? 0.0
-        : 25 * (reflectionsCorrect / reflectionsTotal);
+        : 25.0 * (reflectionsCorrect / reflectionsTotal);
 
     return ScoreBreakdown(
       valueScore: value,

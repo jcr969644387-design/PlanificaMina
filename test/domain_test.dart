@@ -109,12 +109,12 @@ void main() {
   group('NSR polimetálico', () {
     test('suma ponderada de tres metales', () {
       final poly = CaseRepository.byId('znpbag_poly');
-      final b = Block(
+      const b = Block(
         i: 0,
         j: 0,
         k: 0,
         tonnage: 1000,
-        grades: const {'Zn': 4.0, 'Pb': 1.2, 'Ag': 55.0},
+        grades: {'Zn': 4.0, 'Pb': 1.2, 'Ag': 55.0},
         phaseIndex: 0,
       );
       expect(CutoffCalculator.blockNsr(b, poly.metals),

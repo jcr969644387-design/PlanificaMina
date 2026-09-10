@@ -80,7 +80,7 @@ class _WorkspaceScreenState extends ConsumerState<WorkspaceScreen> {
         selectedIndex: _tab,
         onDestinationSelected: (i) => setState(() => _tab = i),
         backgroundColor: AppColors.surface,
-        indicatorColor: AppColors.ore.withOpacity(0.22),
+        indicatorColor: AppColors.ore.withValues(alpha: 0.22),
         destinations: const [
           NavigationDestination(
               icon: Icon(Icons.grid_view_outlined), label: 'Modelo'),
@@ -187,7 +187,7 @@ class _ModelTabState extends ConsumerState<_ModelTab> {
           body: s.mineCase.geologyNote,
         ),
         const SizedBox(height: 10),
-        _InfoBox(
+        const _InfoBox(
           title: 'Clasificación de recursos',
           body:
               'Este modelo trata todo el material como recurso medido, lo cual '
@@ -270,7 +270,7 @@ class _CutoffTab extends ConsumerWidget {
           decoration: BoxDecoration(
             color: AppColors.surface,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColors.ore.withOpacity(0.5)),
+            border: Border.all(color: AppColors.ore.withValues(alpha: 0.5)),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -460,7 +460,7 @@ class _FormulaBox extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColors.surfaceAlt.withOpacity(0.55),
+        color: AppColors.surfaceAlt.withValues(alpha: 0.55),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -525,7 +525,9 @@ class _CriterionChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
         decoration: BoxDecoration(
-          color: active ? AppColors.ore.withOpacity(0.20) : AppColors.surfaceAlt,
+          color: active
+              ? AppColors.ore.withValues(alpha: 0.20)
+              : AppColors.surfaceAlt,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
               color: active ? AppColors.ore : Colors.transparent),
@@ -634,7 +636,7 @@ class _ScheduleTab extends ConsumerWidget {
           const SizedBox(height: 12),
         ],
 
-        const SectionTitle('Programa de producción',
+        SectionTitle('Programa de producción',
             subtitle: 'Vida de mina: ${r.lifeYears} años'),
         const SizedBox(height: 8),
         _ScheduleTable(result: r, symbol: primary.symbol, metal: primary),
@@ -710,9 +712,9 @@ class _IssueTile extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.10),
+        color: color.withValues(alpha: 0.10),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: color.withOpacity(0.5)),
+        border: Border.all(color: color.withValues(alpha: 0.5)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1105,7 +1107,7 @@ class _FindingCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: AppColors.surfaceAlt.withOpacity(0.6),
+                color: AppColors.surfaceAlt.withValues(alpha: 0.6),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(

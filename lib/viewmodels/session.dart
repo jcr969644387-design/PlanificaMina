@@ -247,8 +247,6 @@ class SessionViewModel extends ChangeNotifier {
       );
 
   void _recompute({required String? trigger}) {
-    final metals = activeMetals;
-
     _cutoffs = CutoffCalculator.compute(
       costs: _params.costs,
       discountRate: _params.discountRate,
