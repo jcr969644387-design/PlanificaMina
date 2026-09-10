@@ -92,6 +92,82 @@ jobs:
       - name: Compilar APK
         run: flutter build apk --release
 
+      # apksigner y zipalign viven en build-tools, cuya versión cambia con la
+      # imagen del runner. Se resuelve la más reciente instalada en vez de
+      # fijar un número que caducaría.
+      - name: Localizar herramientas de firma del Android SDK
+        run: |
+          set -e
+          sdk="${ANDROID_HOME:-$ANDROID_SDK_ROOT}"
+          test -n "$sdk" || { echo "No hay ANDROID_HOME ni ANDROID_SDK_ROOT"; exit 1; }
+          bt=$(ls -d "$sdk"/build-tools/*/ 2>/dev/null | sort -V | tail -1)
+          test -n "$bt" || { echo "No hay build-tools en $sdk"; exit 1; }
+          test -x "$bt/apksigner" || { echo "No existe $bt/apksigner"; exit 1; }
+          test -x "$bt/zipalign" || { echo "No existe $bt/zipalign"; exit 1; }
+          echo "APKSIGNER=$bt/apksigner" >> "$GITHUB_ENV"
+          echo "ZIPALIGN=$bt/zipalign" >> "$GITHUB_ENV"
+          echo "build-tools: $bt"
+
+      # Sin esto, el APK sale firmado con la clave de depuración: la misma en
+      # todas las instalaciones de Android del mundo, pensada para desarrollo.
+      # Play Protect la reconoce y avisa. Firmarlo con una clave propia y
+      # estable no elimina el aviso de «origen desconocido» — eso lo produce
+      # instalar fuera de Play Store, pase lo que pase — pero sí quita el
+      # motivo que depende de nosotros, y es imprescindible para que las
+      # actualizaciones se instalen encima de la versión anterior.
+      #
+      # La clave vive en los secrets del repositorio. Cómo generarla y
+      # cargarla: docs/FIRMA_APK.md
+      - name: Firmar el APK para distribución
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          set -e
+          apk="build/app/outputs/flutter-apk/app-release.apk"
+          test -f "$apk" || { echo "No existe $apk"; exit 1; }
+
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "::warning title=APK firmado con clave de depuración::Falta el secret KEYSTORE_BASE64, así que Play Protect avisará al instalar. Pasos en docs/FIRMA_APK.md"
+            echo "Firma actual del APK:"
+            "$APKSIGNER" verify --print-certs "$apk" 2>/dev/null \
+              | grep -i 'certificate DN' || true
+            exit 0
+          fi
+
+          echo "$KEYSTORE_BASE64" | base64 -d > /tmp/planificamina.jks
+          if [ ! -s /tmp/planificamina.jks ]; then
+            echo "El keystore decodificado está vacío: revisa que KEYSTORE_BASE64 se copiara entero."
+            exit 1
+          fi
+
+          # zipalign antes de firmar: apksigner exige que el APK ya esté
+          # alineado, porque firmar después de alinear invalidaría la firma.
+          "$ZIPALIGN" -p -f 4 "$apk" /tmp/aligned.apk
+
+          "$APKSIGNER" sign \
+            --ks /tmp/planificamina.jks \
+            --ks-pass env:KEYSTORE_PASSWORD \
+            --ks-key-alias "$KEY_ALIAS" \
+            --key-pass env:KEY_PASSWORD \
+            --out "$apk" \
+            /tmp/aligned.apk
+
+          rm -f /tmp/planificamina.jks /tmp/aligned.apk
+
+          echo "Verificando la firma:"
+          "$APKSIGNER" verify --verbose --print-certs "$apk"
+
+          # Si siguiera saliendo la clave de depuración, algo falló en
+          # silencio y no queremos publicar ese APK como si estuviera firmado.
+          if "$APKSIGNER" verify --print-certs "$apk" | grep -qi 'CN=Android Debug'; then
+            echo "El APK sigue firmado con la clave de depuración."
+            exit 1
+          fi
+          echo "APK firmado para distribución."
+
       - name: Publicar como artefacto de la ejecución
         uses: actions/upload-artifact@v4
         with:
@@ -106,6 +182,12 @@ jobs:
           files: build/app/outputs/flutter-apk/app-release.apk
           body: |
             APK de PlanificaMina generado automáticamente desde ${{ github.ref_name }}.
+
+            **Cómo instalarlo:** descarga `app-release.apk` y ábrelo en el
+            teléfono. Android pedirá permiso para instalar desde orígenes
+            desconocidos y Play Protect mostrará un aviso: es lo normal en
+            cualquier aplicación que no venga de Google Play. Elige «Instalar
+            de todos modos».
 
             Aplicación educativa. Modelo simplificado: no sustituye software
             profesional de planeamiento ni un estudio de factibilidad.

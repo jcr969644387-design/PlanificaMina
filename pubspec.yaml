@@ -1,7 +1,7 @@
 name: planificamina
 description: Simulador educativo de planeamiento minero para estudiantes de Ingeniería de Minas.
 publish_to: 'none'
-version: 1.0.5+6
+version: 1.0.6+7
 
 environment:
   sdk: '>=3.6.0 <4.0.0'
@@ -13,6 +13,10 @@ dependencies:
     sdk: flutter
   flutter_riverpod: ^2.5.1
   shared_preferences: ^2.2.3
+  # Tercera dependencia, y la única añadida por una razón de producto: el SDK
+  # de Flutter no sabe reproducir audio propio. SystemSound solo emite el clic
+  # del sistema, que en la mayoría de teléfonos Android no se oye.
+  audioplayers: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -21,3 +25,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    # Efectos de interfaz sintetizados por tools/gen_sounds.ps1. Pesan 59 kB
+    # en total y son WAV a propósito: sin decodificador de por medio, la
+    # latencia entre el toque y el sonido es la mínima posible.
+    - assets/sounds/

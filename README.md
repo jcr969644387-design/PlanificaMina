@@ -19,7 +19,7 @@ Requiere Flutter 3.10 o superior.
 ```bash
 cd planificamina
 
-flutter pub get          # descarga las dos dependencias
+flutter pub get          # descarga las tres dependencias
 flutter test             # ejecuta la suite del motor de cálculo
 flutter run              # ejecuta en un dispositivo o emulador conectado
 ```
@@ -94,7 +94,7 @@ Los tres son yacimientos ficticios, generados por un algoritmo determinista: id�
 lib/
 ├── main.dart
 ├── core/ui.dart                    tema, formato, componentes
-├── core/feedback.dart              vibración y sonido, sin dependencias
+├── core/feedback.dart              vibración y efectos de sonido
 ├── domain/                         Dart puro, sin Flutter — testeable al 100 %
 │   ├── models.dart                 metales, bloques, casos, escenarios
 │   ├── cutoff.dart                 NSR, breakeven, marginal, Lane, ley-tonelaje
@@ -106,15 +106,25 @@ lib/
 ├── viewmodels/session.dart         MVVM sobre Riverpod
 ├── widgets/                        sección 2D, isométrico, gráficos
 └── screens/                        inicio, espacio de trabajo, evaluación, teoría
+
+assets/sounds/                      cinco efectos WAV sintetizados
 ```
 
-**Dos dependencias en total:** `flutter_riverpod` y `shared_preferences`. Cada dependencia es deuda de mantenimiento; un proyecto educativo pequeño debe minimizarlas.
+**Tres dependencias en total:** `flutter_riverpod`, `shared_preferences` y
+`audioplayers`. Cada dependencia es deuda de mantenimiento; un proyecto
+educativo pequeño debe minimizarlas.
 
-La retroalimentación táctil y sonora sigue el mismo criterio: sale entera de
-`package:flutter/services.dart`, sin paquetes de audio ni archivos de sonido. El
-sonido es el clic del sistema, así que respeta el ajuste de sonidos táctiles del
-teléfono, y la vibración usa `performHapticFeedback`, que no exige el permiso
-`VIBRATE`.
+La tercera se añadió a regañadientes. La primera versión de la
+retroalimentación usaba solo `SystemSound.play`, del propio SDK, sin ningún
+paquete: no se oía nada. En Android ese clic solo suena si el usuario tiene
+activados los sonidos táctiles del sistema, y de fábrica suelen venir apagados.
+Sonar de verdad exige reproducir audio propio, y el SDK de Flutter no sabe
+hacerlo.
+
+Los efectos son cinco WAV de menos de 60 kB en total, sintetizados por
+`tools/gen_sounds.ps1` — nada descargado, nada con licencia que auditar, y
+regenerables. La vibración sigue saliendo de `performHapticFeedback`, que no
+exige el permiso `VIBRATE`.
 
 El icono de la aplicación y su nombre visible viven en `android_res/`, porque la
 carpeta `android/` se regenera en cada build y se llevaría por delante cualquier
@@ -150,15 +160,26 @@ instala en cualquier teléfono Android sin tener que averiguar la arquitectura
 del procesador. Los artefactos caducan a los 30 días y **solo se pueden
 descargar con la sesión de GitHub iniciada**.
 
-Como va firmado con la clave de depuración, el teléfono pedirá autorizar la
-instalación desde orígenes desconocidos.
+Al instalarlo, el teléfono pedirá autorizar orígenes desconocidos y Play
+Protect avisará. Eso pasa con **cualquier** APK que no venga de Google Play, y
+no se quita firmando.
+
+Lo que sí se quita firmando es el segundo motivo del aviso: por defecto Flutter
+recurre a la clave de depuración, que es idéntica en todas las instalaciones de
+Android del mundo. Firmar con una clave propia también es lo que permite que
+una versión nueva se instale **encima** de la anterior sin desinstalarla y
+perder el progreso guardado.
+
+Se configura una sola vez, con cuatro secrets en el repositorio:
+**[docs/FIRMA_APK.md](docs/FIRMA_APK.md)**. Mientras falten, el build sigue
+funcionando y deja un aviso visible en la ejecución.
 
 Para un enlace público y permanente, crea una etiqueta de versión: eso publica
 un release con el APK adjunto, descargable por cualquiera sin cuenta.
 
 ```bash
-git tag v1.0.5
-git push origin v1.0.5
+git tag v1.0.6
+git push origin v1.0.6
 ```
 
 ---
@@ -172,6 +193,7 @@ git push origin v1.0.5
 | `docs/ETAPA5_ARQUITECTURA.md` | Decisiones técnicas y alternativas descartadas |
 | `docs/ETAPA6_IA.md` | Por qué el MVP no lleva IA generativa y cuándo tendría sentido |
 | `docs/CORRECCIONES_APLICADAS.md` | Errores del brief original y su corrección, con verificación numérica |
+| `docs/FIRMA_APK.md` | Firmar el APK para distribución: qué advertencias quita y cuáles no |
 
 ---
 

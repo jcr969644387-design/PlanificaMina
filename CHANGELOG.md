@@ -2,6 +2,34 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
+## [1.0.6] — 2026-09-10
+
+### Corregido
+- **El sonido no sonaba.** La versión anterior usaba
+  `SystemSound.play(SystemSoundType.click)`, que no añade dependencias pero
+  tampoco se oye: en Android ese clic sale solo si el usuario tiene activados
+  los sonidos táctiles del sistema, y de fábrica suelen venir apagados. Ahora
+  hay cinco efectos WAV propios en `assets/sounds/`, sintetizados por
+  `tools/gen_sounds.ps1`, reproducidos con `audioplayers` a volumen 0,35.
+  Suenan al pulsar un botón, elegir una opción, cambiar de pestaña, reordenar
+  fases, guardar el diagnóstico, copiar al portapapeles y acertar o fallar una
+  reflexión.
+- **Firma del APK.** Hasta ahora salía firmado con la clave de depuración: la
+  misma en todas las instalaciones de Android del mundo, y uno de los motivos
+  del aviso de Play Protect. El workflow firma con `apksigner` usando una clave
+  propia guardada en los secrets del repositorio, y falla si el APK terminara
+  igualmente con la de depuración. Sin los secrets el build sigue funcionando y
+  deja un aviso visible. Pasos en `docs/FIRMA_APK.md`.
+
+  Conviene no prometer de más: el aviso de «origen desconocido» **no**
+  desaparece: lo produce instalar fuera de Google Play, pase lo que pase.
+  Firmar quita el motivo que sí dependía de nosotros, y es lo que permite
+  instalar una versión encima de la anterior sin perder el progreso.
+
+### Añadido
+- `docs/FIRMA_APK.md` y `tools/gen_keystore.sh` para generar la clave y cargar
+  los cuatro secrets.
+
 ## [1.0.5] — 2026-09-10
 
 ### Añadido

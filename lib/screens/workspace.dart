@@ -617,7 +617,10 @@ class _ScheduleTab extends ConsumerWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           buildDefaultDragHandles: true,
-          onReorder: s.reorderPhases,
+          onReorder: (oldIndex, newIndex) {
+            Haptics.select();
+            s.reorderPhases(oldIndex, newIndex);
+          },
           children: [
             for (int idx = 0; idx < s.params.phaseOrder.length; idx++)
               _phaseTile(s, idx),
