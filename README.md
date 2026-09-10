@@ -1,7 +1,7 @@
 # PlanificaMina
 
-[![CI](https://github.com/USUARIO/REPOSITORIO/actions/workflows/ci.yml/badge.svg)](https://github.com/USUARIO/REPOSITORIO/actions/workflows/ci.yml)
-[![Build APK](https://github.com/USUARIO/REPOSITORIO/actions/workflows/build-apk.yml/badge.svg)](https://github.com/USUARIO/REPOSITORIO/actions/workflows/build-apk.yml)
+[![CI](https://github.com/jcr969644387-design/PlanificaMina/actions/workflows/ci.yml/badge.svg)](https://github.com/jcr969644387-design/PlanificaMina/actions/workflows/ci.yml)
+[![Build APK](https://github.com/jcr969644387-design/PlanificaMina/actions/workflows/build-apk.yml/badge.svg)](https://github.com/jcr969644387-design/PlanificaMina/actions/workflows/build-apk.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-E0A343.svg)](LICENSE)
 
 Simulador educativo de planeamiento minero para estudiantes de Ingeniería de Minas.
@@ -114,9 +114,27 @@ git push -u origin main
 ```
 
 El repositorio trae dos workflows listos: **CI** corre análisis y pruebas en cada
-push, y **Build APK** compila y publica el instalador al crear una etiqueta `v*`.
-Recuerda sustituir `USUARIO/REPOSITORIO` en las insignias de arriba y en
-`.github/ISSUE_TEMPLATE/config.yml`.
+push, y **Build APK** compila el instalador.
+
+### Descargar el APK sin compilar nada
+
+**Build APK** se ejecuta en cada push a `main`. Para bajar el instalador:
+
+1. Entra en la pestaña **Actions** del repositorio.
+2. Abre la última ejecución de **Build APK** que aparezca en verde.
+3. Al final de la página, en **Artifacts**, descarga `planificamina-apk`.
+
+Es un `.zip` con el APK universal (`app-release.apk`) y los tres APK separados
+por arquitectura, que son bastante más livianos. Los artefactos caducan a los
+30 días y **solo se pueden descargar con la sesión de GitHub iniciada**.
+
+Para un enlace público y permanente, crea una etiqueta de versión: eso publica
+un release con los APK adjuntos, descargables por cualquiera sin cuenta.
+
+```bash
+git tag v1.0.2
+git push origin v1.0.2
+```
 
 ---
 

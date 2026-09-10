@@ -1,9 +1,14 @@
 name: Build APK
 
-# Se dispara al crear una etiqueta de versión (v1.0.0, v1.1.0…) o a mano
-# desde la pestaña Actions.
+# Se dispara en cada push a main, al crear una etiqueta de versión
+# (v1.0.0, v1.1.0…) o a mano desde la pestaña Actions.
+#
+# El disparo por push existe para que siempre haya un APK descargable desde
+# la pestaña Actions sin tener que etiquetar. Solo las etiquetas publican
+# además un release con el instalador adjunto.
 on:
   push:
+    branches: [main]
     tags:
       - 'v*'
   workflow_dispatch:
