@@ -2,6 +2,19 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
+## [1.0.2] — 2026-09-10
+
+### Cambiado
+- Todo `lib/` y `test/` pasado por `dart format` (Dart 3.13.3, la misma
+  versión que trae Flutter 3.47.3 en el runner). Solo saltos de línea y
+  sangrado: ningún token cambia. El paso «Verificar formato» del CI, que era
+  informativo y salía en rojo, ahora pasa sin diferencias.
+
+  El estilo resultante es el «short» clásico, no el «tall» de Dart 3.7+,
+  porque la versión de lenguaje del paquete la fija `environment: sdk` en
+  `pubspec.yaml`. Si se sube ese límite a 3.7 o más, `dart format` reescribirá
+  el proyecto entero con el estilo nuevo.
+
 ## [1.0.1] — 2026-09-10
 
 ### Corregido
